@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tejhas – ERP for MSMEs
 
-## Getting Started
+Marketing website for Tejhas MRP and CRM Software. Dark mode, static export, deployable to AWS S3 (and Netlify, GoDaddy).
 
-First, run the development server:
+## Setup
+
+```bash
+npm install
+```
+
+## Contact form (AWS SES)
+
+The contact form sends submissions to **sales@tejhas.com** via an API (Lambda + API Gateway) that uses AWS SES.
+
+- **With backend deployed:** Set `NEXT_PUBLIC_CONTACT_API_URL` at **build time** to your API Gateway URL plus `/send` (e.g. `https://xxxxx.execute-api.us-east-1.amazonaws.com/prod/send`). The deploy script sets this from the CloudFormation stack output.
+- **Without backend:** The form falls back to opening a `mailto:sales@tejhas.com` link so users can still send their message from their email client.
+
+## Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build (static export)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+Output is in the `out/` directory. For production, set `NEXT_PUBLIC_CONTACT_API_URL` so the form posts to your API:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+NEXT_PUBLIC_CONTACT_API_URL=https://your-api-id.execute-api.region.amazonaws.com/prod/send npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment (AWS S3 + Lambda + SES)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Backend (Lambda, API Gateway, S3 bucket) and frontend deploy are in the `deploy/` folder.
 
-## Deploy on Vercel
+**Prerequisites**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- AWS CLI configured with credentials
+- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html) installed
+- SES: the sender **support@tejhas.com** is configured in the template (must be verified in SES). Deployment defaults to **ap-south-1** (Mumbai) where SES is used.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**1. Deploy backend (once)**
+
+```bash
+cd deploy
+./deploy-backend.sh
+```
+
+This runs `sam build` and `sam deploy`, creating the Lambda, API Gateway (POST `/send`), and S3 bucket. Override parameters if needed (e.g. a unique bucket name):
+
+```bash
+sam deploy ... --parameter-overrides WebsiteBucketName=tejhas-website-yourcompany FromEmail=noreply@tejhas.com
+```
+
+**2. Deploy site**
+
+```bash
+./deploy-site.sh
+```
+
+This builds the Next.js site with the API URL from the stack, then syncs `out/` to the S3 bucket. The script reads the API URL from CloudFormation outputs.
+
+**Optional:** Set `STACK_NAME` or `AWS_REGION` before running (default region is `ap-south-1` for SES):
+
+```bash
+export STACK_NAME=tejhas-website
+export AWS_REGION=ap-south-1
+./deploy-backend.sh
+./deploy-site.sh
+```
+
+After deployment, use the **exact** website URL printed by the deploy scripts (or from the stack output **WebsiteURL** in the AWS Console). For ap-south-1 the correct format is `http://<bucket>.s3-website.ap-south-1.amazonaws.com` (dot between `s3-website` and the region, not a hyphen).
+
+**Custom domain (tejhas.com) with HTTPS:** See **[deploy/CUSTOM_DOMAIN_HTTPS.md](deploy/CUSTOM_DOMAIN_HTTPS.md)** for step-by-step instructions to point https://tejhas.com (and www) to this site via CloudFront and GoDaddy DNS, without changing erp.tejhas.com.
+
+## Logo
+
+The Tejhas logo is in `public/logo.png`. Replace it with your own asset if needed.

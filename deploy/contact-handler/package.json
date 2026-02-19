@@ -1,0 +1,9 @@
+{
+  "name": "contact-handler",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.mjs",
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.992.0"
+  }
+}

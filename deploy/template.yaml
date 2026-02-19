@@ -1,0 +1,100 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Tejhas contact API (Lambda + API Gateway) and website S3 bucket
+
+Parameters:
+  FromEmail:
+    Type: String
+    Default: "support@tejhas.com"
+    Description: Verified SES sender email (must be verified in SES)
+  WebsiteBucketName:
+    Type: String
+    Default: "tejhas-website"
+    Description: S3 bucket name for static website (must be globally unique)
+
+Globals:
+  Function:
+    Timeout: 10
+    MemorySize: 256
+
+Resources:
+  ContactApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: prod
+      CorsConfiguration:
+        AllowOrigins:
+          - "*"
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+
+  ContactFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs18.x
+      CodeUri: contact-handler/
+      Environment:
+        Variables:
+          FROM_EMAIL: !Ref FromEmail
+          AWS_SES_REGION: ap-south-1
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+              Resource: "*"
+      Events:
+        PostSend:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ContactApi
+            Path: /send
+            Method: post
+
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref WebsiteBucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DependsOn: WebsiteBucket
+    Properties:
+      Bucket: !Ref WebsiteBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action: s3:GetObject
+            Resource: !Sub "${WebsiteBucket.Arn}/*"
+
+Outputs:
+  ContactApiUrl:
+    Description: API Gateway invoke URL for the contact form (set NEXT_PUBLIC_CONTACT_API_URL to this + /send)
+    Value: !Sub "https://${ContactApi}.execute-api.${AWS::Region}.amazonaws.com/prod"
+    Export:
+      Name: !Sub "${AWS::StackName}-ContactApiUrl"
+  WebsiteBucketName:
+    Description: S3 bucket for static website
+    Value: !Ref WebsiteBucket
+    Export:
+      Name: !Sub "${AWS::StackName}-WebsiteBucket"
+  WebsiteURL:
+    Description: S3 website URL (http). Use this or put CloudFront in front for HTTPS.
+    Value: !GetAtt WebsiteBucket.WebsiteURL
