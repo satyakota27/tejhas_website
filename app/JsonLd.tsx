@@ -10,7 +10,7 @@ const jsonLd = {
       name: "Tejhas",
       url: BASE_URL,
       description:
-        "Tejhas is ERP, MRP and CRM software for MSMEs. Material resource planning and manufacturing ERP that adapts to how you work.",
+        "Tejhas is customized ERP and production management software for MSMEs. Material resource planning and manufacturing ERP that adapts to how you work.",
     },
     {
       "@type": "Organization",
@@ -25,7 +25,7 @@ const jsonLd = {
       name: "Tejhas",
       applicationCategory: "BusinessApplication",
       description:
-        "Tejhas ERP, MRP and CRM software for MSMEs. Material resource planning and manufacturing ERP designed for how you actually work.",
+        "Tejhas customized ERP and production management software for MSMEs. Material resource planning and manufacturing ERP designed for how you actually work.",
       url: BASE_URL,
     },
   ],

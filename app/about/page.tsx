@@ -11,6 +11,8 @@ export const metadata: Metadata = {
     "Tejhas",
     "tejhas software",
     "Tejhas ERP",
+    "Customized ERP",
+    "Customized production management software",
     "ERP for MSMEs",
     "about Tejhas",
   ],

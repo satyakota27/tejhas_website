@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ContactModalProvider } from "@/components/ContactModalContext";
+import { ChatProvider } from "@/components/ChatContext";
+import ChatWidget from "@/components/ChatWidget";
 import JsonLd from "./JsonLd";
 
 const BASE_URL =
@@ -24,6 +26,8 @@ export const metadata: Metadata = {
     "Tejhas",
     "tejhas software",
     "Tejhas ERP",
+    "Customized ERP",
+    "Customized production management software",
     "ERP for MSMEs",
     "ERP",
     "MRP",
@@ -59,9 +63,12 @@ export default function RootLayout({
       <body className={`${plusJakarta.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}>
         <JsonLd />
         <ContactModalProvider>
-          <Header />
-          <main className="flex-1 pt-16 md:pt-20">{children}</main>
-          <Footer />
+          <ChatProvider>
+            <Header />
+            <main className="flex-1 pt-16 md:pt-20">{children}</main>
+            <Footer />
+            <ChatWidget />
+          </ChatProvider>
         </ContactModalProvider>
       </body>
     </html>

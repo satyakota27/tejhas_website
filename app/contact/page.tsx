@@ -11,9 +11,11 @@ export const metadata: Metadata = {
   keywords: [
     "Tejhas",
     "tejhas software",
+    "Tejhas ERP",
+    "Customized ERP",
+    "Customized production management software",
     "contact Tejhas",
     "ERP demo",
-    "Tejhas ERP",
   ],
   openGraph: {
     title: "Contact Us | Tejhas",
