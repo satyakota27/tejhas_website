@@ -1,9 +1,33 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.tejhas.com";
+
 export const metadata: Metadata = {
   title: "Contact Us | Tejhas",
-  description: "Get in touch with Tejhas. Request a demo or ask us about ERP for MSMEs.",
+  description:
+    "Get in touch with Tejhas. Request a demo or ask us about Tejhas ERP, MRP and CRM for MSMEs.",
+  keywords: [
+    "Tejhas",
+    "tejhas software",
+    "contact Tejhas",
+    "ERP demo",
+    "Tejhas ERP",
+  ],
+  openGraph: {
+    title: "Contact Us | Tejhas",
+    description:
+      "Get in touch with Tejhas. Request a demo or ask us about ERP, MRP and CRM for MSMEs.",
+    url: `${BASE_URL}/contact`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact Us | Tejhas",
+    description: "Get in touch with Tejhas. Request a demo or ask us about ERP for MSMEs.",
+  },
+  alternates: { canonical: `${BASE_URL}/contact` },
 };
 
 export default function ContactPage() {

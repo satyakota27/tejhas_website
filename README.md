@@ -29,10 +29,12 @@ Open [http://localhost:3000](http://localhost:3000).
 npm run build
 ```
 
-Output is in the `out/` directory. For production, set `NEXT_PUBLIC_CONTACT_API_URL` so the form posts to your API:
+Output is in the `out/` directory. For production, set `NEXT_PUBLIC_CONTACT_API_URL` so the form posts to your API. For correct canonical URLs, sitemap, and Open Graph (SEO), set `NEXT_PUBLIC_SITE_URL` to your public site URL (e.g. `https://www.tejhas.com`). The deploy script sets both when you run `./deploy-site.sh`.
 
 ```bash
 NEXT_PUBLIC_CONTACT_API_URL=https://your-api-id.execute-api.region.amazonaws.com/prod/send npm run build
+# Optional for SEO (canonical, sitemap.xml, robots.txt, OG):
+# NEXT_PUBLIC_SITE_URL=https://www.tejhas.com
 ```
 
 ## Deployment (AWS S3 + Lambda + SES)

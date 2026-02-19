@@ -1,8 +1,33 @@
 import type { Metadata } from "next";
 
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.tejhas.com";
+
 export const metadata: Metadata = {
   title: "About Us | Tejhas",
-  description: "Meet the founders of Tejhas—ERP built for MSMEs by operators who understand manufacturing and technology.",
+  description:
+    "Meet the founders of Tejhas—ERP, MRP and CRM software built for MSMEs by operators who understand manufacturing and technology.",
+  keywords: [
+    "Tejhas",
+    "tejhas software",
+    "Tejhas ERP",
+    "ERP for MSMEs",
+    "about Tejhas",
+  ],
+  openGraph: {
+    title: "About Us | Tejhas",
+    description:
+      "Meet the founders of Tejhas—ERP, MRP and CRM software built for MSMEs by operators who understand manufacturing and technology.",
+    url: `${BASE_URL}/about`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "About Us | Tejhas",
+    description:
+      "Meet the founders of Tejhas—ERP, MRP and CRM software built for MSMEs.",
+  },
+  alternates: { canonical: `${BASE_URL}/about` },
 };
 
 const founders = [

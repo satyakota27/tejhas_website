@@ -24,9 +24,11 @@ else
   fi
 fi
 
-echo "Building site with NEXT_PUBLIC_CONTACT_API_URL=$CONTACT_API_URL"
+# For production SEO: canonical URLs, sitemap.xml, robots.txt and Open Graph use this base URL (default: https://www.tejhas.com)
+export NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://www.tejhas.com}"
+echo "Building site with NEXT_PUBLIC_CONTACT_API_URL=$CONTACT_API_URL NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL"
 cd "$WEBSITE_DIR"
-NEXT_PUBLIC_CONTACT_API_URL="$CONTACT_API_URL" npm run build
+NEXT_PUBLIC_CONTACT_API_URL="$CONTACT_API_URL" NEXT_PUBLIC_SITE_URL="$NEXT_PUBLIC_SITE_URL" npm run build
 
 echo "Syncing out/ to s3://$BUCKET"
 aws s3 sync out/ "s3://$BUCKET" --delete --region "$AWS_REGION"
