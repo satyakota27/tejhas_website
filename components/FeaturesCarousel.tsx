@@ -12,6 +12,10 @@ const slides = [
     problem: "User Resistance to Change",
     solution: "Tejhas assigns dedicated Customer Success Managers who guide users through adoption and continuous improvement.",
   },
+  {
+    problem: "Badly designed User Interface / workflows",
+    solution: "User Interface and workflows of Tejhas are designed keeping in mind the unique and challenging personas of MSME users.",
+  },
 ];
 
 export default function FeaturesCarousel() {

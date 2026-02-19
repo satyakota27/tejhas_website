@@ -31,6 +31,19 @@ NEXT_PUBLIC_CONTACT_API_URL="$CONTACT_API_URL" npm run build
 echo "Syncing out/ to s3://$BUCKET"
 aws s3 sync out/ "s3://$BUCKET" --delete --region "$AWS_REGION"
 
+# Invalidate CloudFront cache so the new content is served (lookup by Comment first; override with CLOUDFRONT_DISTRIBUTION_ID if needed)
+CF_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Comment=='Tejhas marketing site'].Id" --output text 2>/dev/null | head -1)
+if [ -z "$CF_ID" ] && [ -n "${CLOUDFRONT_DISTRIBUTION_ID:-}" ]; then
+  CF_ID="$CLOUDFRONT_DISTRIBUTION_ID"
+fi
+if [ -n "$CF_ID" ]; then
+  echo "Invalidating CloudFront distribution $CF_ID (paths: /*)"
+  aws cloudfront create-invalidation --distribution-id "$CF_ID" --paths "/*" --output text --query "Invalidation.Id"
+  echo "CloudFront invalidation created. New content will be visible at your custom domain within a few minutes."
+else
+  echo "Tip: To refresh CloudFront after each deploy, set CLOUDFRONT_DISTRIBUTION_ID to your distribution ID, or run: aws cloudfront create-invalidation --distribution-id <ID> --paths '/*'"
+fi
+
 echo ""
 echo "Site deployed to bucket: $BUCKET"
 echo "Open your site at (use this exact URL): $WEBSITE_URL"

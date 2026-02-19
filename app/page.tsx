@@ -11,12 +11,12 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <StatsSection />
       <QuoteSection />
       <FeaturesCarousel />
       <DesignSection />
       <WhyTejhasSection />
       <FoundersSection />
-      <StatsSection />
       <CTASection />
     </>
   );

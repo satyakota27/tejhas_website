@@ -289,4 +289,4 @@ If you want **https://tejhas.com** to show the site directly (same content, no r
 
 - **https://www.tejhas.com** and **https://tejhas.com** (after redirect) → your Tejhas marketing site with HTTPS.
 - **https://erp.tejhas.com** → unchanged.
-- Re-deploy the site with `./deploy-site.sh` as usual; CloudFront will serve new content after cache expiry or invalidation (you can create an invalidation for `/*` in the CloudFront console if needed).
+- Re-deploy the site with `./deploy-site.sh` as usual. The script automatically invalidates the CloudFront cache (paths `/*`) so the new content is served within a few minutes. If you have multiple distributions, set `CLOUDFRONT_DISTRIBUTION_ID` to the correct distribution ID before running the script.
