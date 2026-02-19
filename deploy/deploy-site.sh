@@ -33,6 +33,10 @@ NEXT_PUBLIC_CONTACT_API_URL="$CONTACT_API_URL" NEXT_PUBLIC_SITE_URL="$NEXT_PUBLI
 echo "Syncing out/ to s3://$BUCKET"
 aws s3 sync out/ "s3://$BUCKET" --delete --region "$AWS_REGION"
 
+# Ensure sitemap.xml and robots.txt are served with correct Content-Type (helps Google and other crawlers)
+aws s3 cp "s3://$BUCKET/sitemap.xml" "s3://$BUCKET/sitemap.xml" --content-type "application/xml" --metadata-directive REPLACE --region "$AWS_REGION" 2>/dev/null || true
+aws s3 cp "s3://$BUCKET/robots.txt" "s3://$BUCKET/robots.txt" --content-type "text/plain" --metadata-directive REPLACE --region "$AWS_REGION" 2>/dev/null || true
+
 # Invalidate CloudFront cache so the new content is served (lookup by Comment first; override with CLOUDFRONT_DISTRIBUTION_ID if needed)
 CF_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Comment=='Tejhas marketing site'].Id" --output text 2>/dev/null | head -1)
 if [ -z "$CF_ID" ] && [ -n "${CLOUDFRONT_DISTRIBUTION_ID:-}" ]; then
@@ -49,3 +53,4 @@ fi
 echo ""
 echo "Site deployed to bucket: $BUCKET"
 echo "Open your site at (use this exact URL): $WEBSITE_URL"
+echo "Sitemap (for Google Search Console): https://www.tejhas.com/sitemap.xml"
