@@ -81,4 +81,7 @@ After deployment, use the **exact** website URL printed by the deploy scripts (o
 
 ## Logo
 
-The Tejhas logo is in `public/logo.png`. Replace it with your own asset if needed.
+The header and footer use the logo from **`public/logo.png`**. To use your correct logo:
+
+1. Replace **`public/logo.png`** with your logo file (same name), or  
+2. Add your logo as e.g. `public/tejhas-logo.png` and set `logo.src` in **`site.config.ts`** to `"/tejhas-logo.png"`.

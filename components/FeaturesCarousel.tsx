@@ -9,7 +9,7 @@ const slides = [
     solution: "Tejhas adapts to your organization instead.",
   },
   {
-    problem: "User resistance",
+    problem: "User Resistance to Change",
     solution: "Tejhas assigns dedicated Customer Success Managers who guide users through adoption and continuous improvement.",
   },
 ];
@@ -43,7 +43,7 @@ export default function FeaturesCarousel() {
     <section className="py-16 md:py-24 bg-white/[0.02]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-          Why most ERP software fails in MSMEs
+          Why most ERP software fail in MSMEs
         </h2>
         <p className="text-foreground/70 text-lg max-w-2xl mb-12">
           We built Tejhas to fix what others get wrong.
@@ -56,14 +56,23 @@ export default function FeaturesCarousel() {
                 key={index}
                 className="flex-[0_0_100%] min-w-0 md:flex-[0_0_calc(50%-1rem)] rounded-2xl border border-white/10 bg-white/[0.03] p-8 md:p-10"
               >
-                <div className="flex items-start gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/20 text-accent font-bold">
-                    {index + 1}
-                  </span>
-                  <div>
-                    <p className="text-foreground/60 line-through font-medium mb-2">
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500/20 text-red-400 mt-0.5" aria-hidden>
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </span>
+                    <p className="text-foreground/50 italic font-medium">
                       {slide.problem}
                     </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 mt-0.5" aria-hidden>
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
                     <p className="text-foreground font-semibold text-lg">
                       {slide.solution}
                     </p>

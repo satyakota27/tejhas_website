@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useContactModal } from "@/components/ContactModalContext";
+import { siteConfig } from "@/site.config";
 
 const footerLinks = [
   { href: "/", label: "Home" },
@@ -17,13 +18,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           <div className="flex flex-col gap-4">
-            <Link href="/" className="inline-flex">
+            <Link href="/" className="inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded min-h-[2.5rem]">
               <Image
-                src="/logo.png"
-                alt="Tejhas"
-                width={200}
-                height={56}
-                className="h-10 w-auto"
+                src={siteConfig.logo.src}
+                alt={siteConfig.logo.alt}
+                width={siteConfig.logo.width}
+                height={siteConfig.logo.height}
+                className="h-10 w-auto object-contain object-left"
               />
             </Link>
             <p className="text-foreground/70 text-sm max-w-xs">

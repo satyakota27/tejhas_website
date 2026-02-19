@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useContactModal } from "@/components/ContactModalContext";
+import { siteConfig } from "@/site.config";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -15,16 +16,16 @@ export default function Header() {
   const { openModal } = useContactModal();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-white/10">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link href="/" className="flex items-center gap-2 shrink-0">
+          <Link href="/" className="flex items-center gap-2 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded min-h-[2.5rem] md:min-h-[3rem]">
             <Image
-              src="/logo.png"
-              alt="Tejhas"
-              width={220}
-              height={62}
-              className="h-10 w-auto md:h-12"
+              src={siteConfig.logo.src}
+              alt={siteConfig.logo.alt}
+              width={siteConfig.logo.width}
+              height={siteConfig.logo.height}
+              className="h-10 w-auto md:h-12 object-contain object-left"
               priority
             />
           </Link>
@@ -51,13 +52,13 @@ export default function Header() {
             </li>
           </ul>
 
-          <button
-            type="button"
-            onClick={openModal}
-            className="hidden md:inline-flex items-center justify-center rounded-lg bg-accent hover:bg-accent-hover text-background font-semibold px-5 py-2.5 transition-colors"
-          >
-            Request Demo
-          </button>
+            <button
+                type="button"
+                onClick={openModal}
+                className="hidden md:inline-flex items-center justify-center rounded-lg btn-primary px-5 py-2.5"
+              >
+                Request Demo
+              </button>
 
           <button
             type="button"
@@ -102,7 +103,7 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => { openModal(); setMobileMenuOpen(false); }}
-                  className="inline-flex items-center justify-center rounded-lg bg-accent hover:bg-accent-hover text-background font-semibold px-5 py-2.5 w-full"
+                  className="inline-flex items-center justify-center rounded-lg btn-primary px-5 py-2.5 w-full"
                 >
                   Request Demo
                 </button>

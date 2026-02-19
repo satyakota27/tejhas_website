@@ -20,7 +20,7 @@ export default function CTASection() {
         <button
           type="button"
           onClick={openModal}
-          className="inline-flex items-center justify-center rounded-lg bg-accent hover:bg-accent-hover text-background font-semibold px-8 py-4 text-lg transition-colors"
+          className="btn-primary px-8 py-4 text-lg"
         >
           Request Demo
         </button>

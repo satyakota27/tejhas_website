@@ -173,7 +173,7 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
         <button
           type="submit"
           disabled={state === "submitting"}
-          className="w-full md:w-auto inline-flex items-center justify-center rounded-lg bg-accent hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed text-background font-semibold px-6 py-3 text-sm transition-colors"
+          className="w-full md:w-auto inline-flex items-center justify-center rounded-lg btn-primary disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 text-sm"
         >
           {state === "submitting" ? "Sending…" : "Send message"}
         </button>

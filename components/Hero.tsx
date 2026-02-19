@@ -11,7 +11,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-36">
         <div className="max-w-4xl">
           <p className="text-accent font-semibold tracking-wide uppercase text-sm mb-4">
-            ERP for MSMEs
+            ERP for MSME<span className="normal-case">s</span>
           </p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
             Built for how you actually work.
@@ -26,13 +26,13 @@ export default function Hero() {
             <button
               type="button"
               onClick={openModal}
-              className="inline-flex items-center justify-center rounded-lg bg-accent hover:bg-accent-hover text-background font-semibold px-6 py-3.5 transition-colors"
+              className="btn-primary px-6 py-3.5"
             >
               Request Demo
             </button>
             <Link
               href="/about"
-              className="inline-flex items-center justify-center rounded-lg border border-white/20 hover:border-white/40 text-foreground font-semibold px-6 py-3.5 transition-colors"
+              className="inline-flex items-center justify-center rounded-lg border border-white/20 hover:border-white/40 text-foreground font-semibold px-6 py-3.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               About Us
             </Link>

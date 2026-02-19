@@ -9,12 +9,12 @@ const founders = [
   {
     name: "Satya Kota",
     role: "Chief Technology Officer",
-    bio: "Software Architect with 13+ years of experience. Currently Staff Engineer at Samsung.",
+    bio: "Software Architect with 13+ years of experience.",
   },
   {
     name: "Avinash Reddy Vanakuri",
     role: "Chief Operating Officer",
-    bio: "Manufacturing professional with 13+ years of experience in pump design and production technology. Director of Operations at Premier Pumps.",
+    bio: "Manufacturing professional with 13+ years of experience in pump design and production technology.",
   },
 ];
 
@@ -36,9 +36,6 @@ export default function AboutPage() {
             key={founder.name}
             className="rounded-2xl border border-white/10 bg-white/[0.03] p-8"
           >
-            <div className="h-28 w-28 rounded-full bg-white/10 flex items-center justify-center text-foreground/40 text-sm mb-6">
-              Photo
-            </div>
             <h3 className="text-2xl font-bold text-foreground">{founder.name}</h3>
             <p className="text-accent font-semibold mt-1">{founder.role}</p>
             <p className="text-foreground/80 mt-4 text-lg">{founder.bio}</p>
